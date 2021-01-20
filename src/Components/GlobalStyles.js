@@ -6,6 +6,10 @@ const globalStyles = createGlobalStyle`
 
     html{
         --color-black: #3d3d3d;
+        --color-grey: #636e72;
+        --color-lightGrey: #bdc3c7;
+        --color-blue: #4285f4;
+        --shadow-grey: 0px 0px 18px 0px rgba(217, 217, 217, 1);
     }
 
     *{
@@ -24,10 +28,19 @@ const globalStyles = createGlobalStyle`
         color: inherit;
     }
 
+    button{
+        all: unset;
+    }
+
+    input:focus{
+        outline: none;
+    }
+
     main{
         width: 100%;
         max-width: 1200px;
         margin: 0 auto;
+        padding: 5px 35px;
     }
 `;
 
