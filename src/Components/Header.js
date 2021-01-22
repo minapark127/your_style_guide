@@ -13,6 +13,10 @@ const SHeader = styled.header`
   margin-bottom: 50px;
 `;
 
-const Header = () => <SHeader>✍🏼 Your style guide</SHeader>;
+const Header = () => (
+  <SHeader>
+    ✍🏼 <span className="headerText">Your style guide</span>
+  </SHeader>
+);
 
 export default Header;
