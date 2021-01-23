@@ -27,6 +27,7 @@ const Form = styled.form`
     border: 1px solid var(--color-lightGrey);
     color: var(--color-grey);
     margin-right: 10px;
+    text-transform: none;
     &:focus {
       border: 1px solid var(--color-blue);
       box-shadow: var(--shadow-grey);
@@ -42,6 +43,11 @@ const Form = styled.form`
       color: white;
     }
   }
+`;
+
+const Error = styled.span`
+  color: var(--color-red);
+  font-weight: 600;
 `;
 
 const onFocus = (event) => {
@@ -101,11 +107,14 @@ const StartForm = () => {
           />
           <button onClick={submit.onSubmit}>start</button>
         </Form>
-        <span>
-          type your business name and press start to start generating your style
-          guide
-        </span>
-        {submit.error ? <span>business name must be typed in</span> : null}
+        {submit.error ? (
+          <Error>business name must be typed in</Error>
+        ) : submit.submitted ? null : (
+          <span>
+            type your business name and press start to start generating your
+            style guide
+          </span>
+        )}
       </Section>
 
       {submit.submitted ? (
