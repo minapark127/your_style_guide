@@ -51,27 +51,42 @@ const onFocus = (event) => {
 
 const changeHeader = (text) => {
   const header = document.querySelector(".headerText");
-  header.innerHTML = `Style Guide - ${text}`;
+  header.innerHTML = text;
 };
 
 const useSubmit = (initialValue) => {
   const [submitted, setSubmitted] = useState(initialValue);
   const [businessName, setBusinessName] = useState();
+  const [error, setError] = useState(0);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setBusinessName(event.target.form[0].value); // input value
-    setSubmitted(1);
+    const [input] = event.target.form;
+    if (input.value !== "") {
+      setBusinessName(input.value);
+      setSubmitted(1);
+      setError(0);
+    } else {
+      setError(1);
+    }
   };
 
-  return { submitted, businessName, onSubmit };
+  const onReset = () => {
+    const input = document.querySelector(".businessNameInput");
+    changeHeader("Your style guide");
+    setSubmitted(0);
+    setError(0);
+    input.value = "";
+  };
+
+  return { submitted, businessName, error, onSubmit, onReset };
 };
 
 const StartForm = () => {
   const submit = useSubmit(0);
 
-  if (submit.submitted && submit.businessName !== "") {
-    changeHeader(submit.businessName);
+  if (submit.submitted) {
+    changeHeader(`Style Guide - ${submit.businessName}`);
   }
 
   return (
@@ -81,6 +96,7 @@ const StartForm = () => {
           <input
             type="text"
             placeholder="type your business name"
+            className="businessNameInput"
             {...onFocus}
           />
           <button onClick={submit.onSubmit}>start</button>
@@ -89,10 +105,14 @@ const StartForm = () => {
           type your business name and press start to start generating your style
           guide
         </span>
+        {submit.error ? <span>business name must be typed in</span> : null}
       </Section>
 
-      {submit.submitted && submit.businessName !== "" ? (
-        <StyleGuide title={submit.businessName} />
+      {submit.submitted ? (
+        <>
+          <button onClick={submit.onReset}>reset</button>
+          <StyleGuide title={submit.businessName} />
+        </>
       ) : null}
     </>
   );
