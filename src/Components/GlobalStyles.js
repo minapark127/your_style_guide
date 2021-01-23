@@ -31,6 +31,11 @@ const globalStyles = createGlobalStyle`
 
     button{
         all: unset;
+        font-size: 18px;
+        font-weight: 600;
+        border: 2px solid var(--color-blue);
+        color: var(--color-blue);
+        cursor: pointer;
     }
 
     input:focus{

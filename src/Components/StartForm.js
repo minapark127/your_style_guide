@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import StyleGuide from "./StyleGuide";
+import { ResetIcon } from "../Assets/Icons";
 
 const Section = styled.section`
   display: flex;
@@ -34,10 +35,6 @@ const Form = styled.form`
     }
   }
   button {
-    font-weight: 600;
-    border: 2px solid var(--color-blue);
-    color: var(--color-blue);
-    cursor: pointer;
     &:hover {
       background-color: var(--color-blue);
       color: white;
@@ -48,6 +45,30 @@ const Form = styled.form`
 const Error = styled.span`
   color: var(--color-red);
   font-weight: 600;
+`;
+
+const ResetBtn = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  button {
+    display: flex;
+    align-content: center;
+    padding: 5px;
+    border: none;
+    svg {
+      stroke: var(--color-blue);
+      stroke-width: 2;
+      margin-right: 5px;
+    }
+    &:hover {
+      opacity: 0.8;
+      color: var(--color-grey);
+      svg {
+        stroke: var(--color-grey);
+      }
+    }
+  }
 `;
 
 const onFocus = (event) => {
@@ -119,7 +140,9 @@ const StartForm = () => {
 
       {submit.submitted ? (
         <>
-          <button onClick={submit.onReset}>reset</button>
+          <ResetBtn>
+            <button onClick={submit.onReset}>{ResetIcon}reset</button>
+          </ResetBtn>
           <StyleGuide title={submit.businessName} />
         </>
       ) : null}
