@@ -11,6 +11,8 @@ const globalStyles = createGlobalStyle`
         --color-blue: #4285f4;
         --color-red: #db4437;
         --shadow-grey: 0px 0px 18px 0px rgba(217, 217, 217, 1);
+        --border-lightGrey: 1px solid var(--color-lightGrey);
+        --border-blue: 1px solid var(--color-blue);
     }
 
     *{
@@ -32,8 +34,7 @@ const globalStyles = createGlobalStyle`
     button{
         all: unset;
         font-size: 18px;
-        font-weight: 600;
-        border: 2px solid var(--color-blue);
+        border: var(--border-blue);
         color: var(--color-blue);
         cursor: pointer;
     }

@@ -6,7 +6,6 @@ import { ResetIcon } from "../Assets/Icons";
 const Section = styled.section`
   display: flex;
   flex-direction: column;
-  margin-bottom: 50px;
   span {
     text-align: center;
   }
@@ -21,16 +20,16 @@ const Form = styled.form`
     text-transform: capitalize;
     padding: 10px 15px;
     border-radius: 16px;
-    transition: all linear 0.3s;
+    transition: all linear 0.2s;
   }
   input[type="text"] {
     width: 50%;
-    border: 1px solid var(--color-lightGrey);
+    border: var(--border-lightGrey);
     color: var(--color-grey);
-    margin-right: 10px;
+    margin-right: 5px;
     text-transform: none;
     &:focus {
-      border: 1px solid var(--color-blue);
+      border: var(--border-blue);
       box-shadow: var(--shadow-grey);
     }
   }
