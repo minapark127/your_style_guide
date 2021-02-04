@@ -2,15 +2,22 @@ import styled from "styled-components";
 import ColourPalette from "./ColourPalette";
 
 const H1 = styled.h1`
-  font-size: 23px;
+  font-size: 32px;
+  margin-bottom: 60px;
+  color: var(--color-blue);
   font-weight: 600;
-  margin-bottom: 40px;
+  span {
+    font-size: 25px;
+    color: var(--color-black);
+  }
 `;
 
 const StyleGuide = ({ title }) => {
   return (
     <>
-      <H1>Style Guide - {title}</H1>
+      <H1>
+        Style Guide - <span>{title}</span>
+      </H1>
       <ColourPalette />
     </>
   );

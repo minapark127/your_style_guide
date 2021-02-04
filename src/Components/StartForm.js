@@ -58,7 +58,7 @@ const ResetBtn = styled.div`
     svg {
       stroke: var(--color-blue);
       stroke-width: 2;
-      margin-right: 5px;
+      margin-right: 3px;
     }
     &:hover {
       opacity: 0.8;

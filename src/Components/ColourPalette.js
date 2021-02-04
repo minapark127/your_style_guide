@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import { ResetIcon } from "../Assets/Icons";
+import { ResetIcon, EditIcon } from "../Assets/Icons";
+import { slideIn } from "./GlobalStyles";
 
 const H2 = styled.h2`
   font-size: 20px;
@@ -12,6 +13,7 @@ const Form = styled.form`
   position: relative;
   display: flex;
   align-items: center;
+  margin-bottom: 25px;
   input {
     width: 100%;
     padding: 10px 15px;
@@ -32,8 +34,56 @@ const Form = styled.form`
   }
 `;
 
-const PaletteContainer = styled.section`
+const Palette = styled.section`
+  padding: 20px 10px;
   border: var(--border-lightGrey);
+  border-radius: 3px;
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-gap: 30px;
+    justify-items: center;
+    li {
+      text-align: center;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+    }
+  }
+  animation: ${slideIn} 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+`;
+
+const Chip = styled.div`
+  width: 120px;
+  height: 120px;
+  background-color: ${(props) => props.colour || `white`};
+  margin-bottom: 5px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    display: flex;
+    align-content: center;
+    border: none;
+    padding: 5px;
+    &:last-child {
+      margin-left: 10px;
+    }
+    svg {
+      stroke: var(--color-blue);
+      stroke-width: 2;
+      margin-right: 2px;
+    }
+    &:hover {
+      opacity: 0.8;
+      color: var(--color-grey);
+      svg {
+        stroke: var(--color-grey);
+      }
+    }
+  }
 `;
 
 const useSubmit = (initialValue) => {
@@ -73,25 +123,34 @@ const ColourPalette = () => {
   return (
     <>
       <H2>01. Colour Palette</H2>
-      <Form onSubmit={submit.onSubmit}>
-        <input
-          type="text"
-          placeholder="add colour codes - #000000, #ffffff"
-          ref={colourPaletteInput}
-        />
-        <button onClick={submit.onSubmit}>done</button>
-      </Form>
-      {submit.submitted ? (
-        <PaletteContainer>
-          <button onClick={submit.onReset}>{ResetIcon}reset</button>
-          <button onClick={onEdit}>{ResetIcon}edit</button>
-          <ul>
-            {submit.colours.map((colour, index) => (
-              <li key={index}>{colour}</li>
-            ))}
-          </ul>
-        </PaletteContainer>
-      ) : null}
+      <section>
+        <Form onSubmit={submit.onSubmit}>
+          <input
+            type="text"
+            placeholder="add colour codes - #000000, #ffffff"
+            ref={colourPaletteInput}
+          />
+          <button onClick={submit.onSubmit}>done</button>
+        </Form>
+
+        {submit.submitted ? (
+          <Palette>
+            <ul>
+              {submit.colours.map((colour, index) => (
+                <li key={index}>
+                  <Chip colour={colour} />
+                  {colour}
+                </li>
+              ))}
+            </ul>
+
+            <ButtonContainer>
+              <button onClick={onEdit}>{EditIcon}edit</button>
+              <button onClick={submit.onReset}>{ResetIcon}reset</button>
+            </ButtonContainer>
+          </Palette>
+        ) : null}
+      </section>
     </>
   );
 };

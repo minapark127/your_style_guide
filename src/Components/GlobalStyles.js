@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, keyframes } from "styled-components";
 import { reset } from "styled-reset";
 
 const globalStyles = createGlobalStyle`
@@ -9,6 +9,7 @@ const globalStyles = createGlobalStyle`
         --color-grey: #636e72;
         --color-lightGrey: #bdc3c7;
         --color-blue: #4285f4;
+        /* --color-blue: #0652DD; */
         --color-red: #db4437;
         --shadow-grey: 0px 0px 18px 0px rgba(217, 217, 217, 1);
         --border-lightGrey: 1px solid var(--color-lightGrey);
@@ -52,3 +53,13 @@ const globalStyles = createGlobalStyle`
 `;
 
 export default globalStyles;
+
+export const slideIn = keyframes`
+0% {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+100% {
+  transform: translateY(0);
+  opacity: 1;
+}`;
