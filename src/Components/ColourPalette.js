@@ -2,12 +2,7 @@ import { useRef, useState } from "react";
 import styled from "styled-components";
 import { ResetIcon, EditIcon } from "../Assets/Icons";
 import { slideIn } from "./GlobalStyles";
-
-const H2 = styled.h2`
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 25px;
-`;
+import StyleGuideSection from "./StyleGuideSection";
 
 const Form = styled.form`
   position: relative;
@@ -122,8 +117,7 @@ const ColourPalette = () => {
 
   return (
     <>
-      <H2>01. Colour Palette</H2>
-      <section>
+      <StyleGuideSection heading="01.Colour Palette">
         <Form onSubmit={submit.onSubmit}>
           <input
             type="text"
@@ -150,7 +144,7 @@ const ColourPalette = () => {
             </ButtonContainer>
           </Palette>
         ) : null}
-      </section>
+      </StyleGuideSection>
     </>
   );
 };
