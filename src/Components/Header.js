@@ -10,7 +10,7 @@ const SHeader = styled.header`
   box-shadow: 0px 0px 18px 0px rgba(217, 217, 217, 1);
   position: sticky;
   top: 0;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
 
 const Header = () => (

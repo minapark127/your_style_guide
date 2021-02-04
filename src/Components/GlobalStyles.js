@@ -63,3 +63,12 @@ export const slideIn = keyframes`
   transform: translateY(0);
   opacity: 1;
 }`;
+
+export const FadeOut = keyframes`
+ 8% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;

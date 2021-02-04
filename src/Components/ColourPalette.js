@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import { ResetIcon, EditIcon } from "../Assets/Icons";
-import { slideIn } from "./GlobalStyles";
+import { slideIn, FadeOut } from "./GlobalStyles";
 import StyleGuideSection from "./StyleGuideSection";
 
 const Form = styled.form`
@@ -52,6 +52,21 @@ const Chip = styled.div`
   height: 120px;
   background-color: ${(props) => props.colour || `white`};
   margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+  div {
+    display: none;
+    color: black;
+    animation: ${FadeOut} 1.5s ease-out both;
+  }
+  .show {
+    display: block;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -132,7 +147,24 @@ const ColourPalette = () => {
             <ul>
               {submit.colours.map((colour, index) => (
                 <li key={index}>
-                  <Chip colour={colour} />
+                  <Chip
+                    key={index}
+                    colour={colour}
+                    onClick={(event) => {
+                      navigator.clipboard.writeText(colour);
+                      event.target.firstChild.classList.toggle("show");
+                    }}
+                    title="copy"
+                  >
+                    <div
+                      onAnimationEnd={(event) =>
+                        event.target.classList.remove("show")
+                      }
+                    >
+                      copied!
+                    </div>
+                  </Chip>
+
                   {colour}
                 </li>
               ))}

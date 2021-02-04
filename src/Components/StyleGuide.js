@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import ColourPalette from "./ColourPalette";
+import Typography from "./Typography";
 
 const H1 = styled.h1`
   font-size: 32px;
-  margin-bottom: 60px;
-  color: var(--color-blue);
   font-weight: 600;
+  color: var(--color-blue);
+  margin-bottom: 35px;
   span {
     font-size: 25px;
     color: var(--color-black);
@@ -19,6 +20,7 @@ const StyleGuide = ({ title }) => {
         Style Guide - <span>{title}</span>
       </H1>
       <ColourPalette />
+      <Typography />
     </>
   );
 };
