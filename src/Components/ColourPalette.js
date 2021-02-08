@@ -85,6 +85,8 @@ const ButtonContainer = styled.div`
       stroke: var(--color-blue);
       stroke-width: 2;
       margin-right: 2px;
+      width: 17px;
+      height: 17px;
     }
     &:hover {
       opacity: 0.8;

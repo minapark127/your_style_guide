@@ -34,7 +34,7 @@ const globalStyles = createGlobalStyle`
 
     button{
         all: unset;
-        font-size: 18px;
+        font-size: 16px;
         border: var(--border-blue);
         color: var(--color-blue);
         cursor: pointer;

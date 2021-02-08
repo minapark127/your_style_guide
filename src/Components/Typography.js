@@ -6,17 +6,23 @@ import { useState } from "react";
 import {
   ArrowsSortIcon,
   BoldIcon,
+  CheckIcon,
   LineHeightIcon,
+  ResetIcon,
   TypographyIcon,
 } from "../Assets/Icons";
+
+const Wrapper = styled.div`
+  border: var(--border-lightGrey);
+  border-radius: 5px;
+`;
 
 const SelectBar = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  grid-gap: 20px;
-  padding: 0 20px;
-  margin-bottom: 20px;
+  grid-template-columns: 1.3fr 0.8fr 1fr 0.8fr;
+  grid-gap: 15px;
+  padding: 10px 20px;
 `;
 
 const SelectContainer = styled.div`
@@ -29,6 +35,69 @@ const SelectContainer = styled.div`
     margin-right: 10px;
     svg {
       stroke-width: 2.5;
+    }
+  }
+`;
+
+const Display = styled.div`
+  padding: 30px;
+  border-top: var(--border-lightGrey);
+`;
+
+const SampleText = styled.section`
+  font-family: ${(props) => (props.font ? props.font : "Open Sans")};
+  font-size: ${(props) => (props.size ? props.size : "18px")};
+  font-weight: ${(props) => (props.weight ? props.weight : 400)};
+  line-height: ${(props) => (props.lineHeight ? props.lineHeight : 1.5)};
+  margin-bottom: 40px;
+`;
+
+const Info = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  ul {
+    display: flex;
+    li {
+      font-size: 14px;
+      color: var(--color-grey);
+      &:not(:last-child) {
+        margin-right: 10px;
+        ::after {
+          content: "·";
+          position: relative;
+          right: -5px;
+        }
+      }
+    }
+  }
+  div {
+    display: flex;
+    button {
+      border: none;
+      display: flex;
+      align-content: center;
+      padding: 5px;
+      border-radius: 5px;
+      transition: all linear 0.2s;
+      &:last-child {
+        margin-left: 10px;
+      }
+      svg {
+        stroke: var(--color-blue);
+        stroke-width: 2;
+        margin-right: 2px;
+        width: 17px;
+        height: 17px;
+      }
+      &:hover {
+        opacity: 0.8;
+        color: var(--color-grey);
+        svg {
+          stroke: var(--color-grey);
+        }
+      }
     }
   }
 `;
@@ -57,16 +126,9 @@ const customStyles = {
     ...provided,
     fontFamily: state.data.font,
     fontWeight: state.data.weight,
+    overflow: "visible",
   }),
 };
-
-const Display = styled.div``;
-const SampleText = styled.section`
-  font-family: ${(props) => (props.font ? props.font : "Open Sans")};
-  font-size: ${(props) => (props.size ? props.size : "18px")};
-  font-weight: ${(props) => (props.weight ? props.weight : 400)};
-  line-height: ${(props) => (props.lineHeight ? props.lineHeight : 1)};
-`;
 
 const fonts = [
   {
@@ -159,74 +221,106 @@ const Typography = () => {
     makeFontWeightOptions(fontOptions[0])[1]
   );
   const [selectedHeight, setSelectedHeight] = useState(
-    makeLineHeightOptions()[10]
+    makeLineHeightOptions()[15]
   );
+
+  const reset = () => {
+    setSelectedFont(fontOptions[0]);
+    setSelectedSize(makeSizeOptions()[2]);
+    setSelectedWeight(makeFontWeightOptions(fontOptions[0])[1]);
+    setSelectedHeight(makeLineHeightOptions()[15]);
+  };
 
   return (
     <StyleGuideSection heading="02.Typography">
-      <SelectBar>
-        <SelectContainer>
-          <span>{TypographyIcon}</span>
-          <Select
-            defaultValue={selectedFont}
-            onChange={setSelectedFont}
-            options={fontOptions}
-            styles={customStyles}
-          />
-        </SelectContainer>
-        <SelectContainer>
-          <span>{ArrowsSortIcon}</span>
-          <CreatableSelect
-            isClearable
-            defaultValue={selectedSize}
-            onChange={setSelectedSize}
-            options={makeSizeOptions()}
-            styles={customStyles}
-          />
-        </SelectContainer>
-        <SelectContainer>
-          <span>{BoldIcon}</span>
-          <Select
-            defaultValue={selectedWeight}
-            onChange={setSelectedWeight}
-            options={makeFontWeightOptions(selectedFont)}
-            styles={customStyles}
-          />
-        </SelectContainer>
-        <SelectContainer>
-          <span>{LineHeightIcon}</span>
-          <CreatableSelect
-            isClearable
-            defaultValue={selectedHeight}
-            onChange={setSelectedHeight}
-            options={makeLineHeightOptions()}
-            styles={customStyles}
-          />
-        </SelectContainer>
-      </SelectBar>
+      <Wrapper>
+        <SelectBar>
+          <SelectContainer>
+            <span>{TypographyIcon}</span>
+            <Select
+              defaultValue={selectedFont}
+              value={selectedFont}
+              onChange={setSelectedFont}
+              options={fontOptions}
+              styles={customStyles}
+            />
+          </SelectContainer>
+          <SelectContainer>
+            <span>{ArrowsSortIcon}</span>
+            <CreatableSelect
+              isClearable
+              defaultValue={selectedSize}
+              value={selectedSize}
+              onChange={setSelectedSize}
+              options={makeSizeOptions()}
+              styles={customStyles}
+            />
+          </SelectContainer>
+          <SelectContainer>
+            <span>{BoldIcon}</span>
+            <Select
+              defaultValue={selectedWeight}
+              value={selectedWeight}
+              onChange={setSelectedWeight}
+              options={makeFontWeightOptions(selectedFont)}
+              styles={customStyles}
+            />
+          </SelectContainer>
+          <SelectContainer>
+            <span>{LineHeightIcon}</span>
+            <CreatableSelect
+              isClearable
+              defaultValue={selectedHeight}
+              value={selectedHeight}
+              onChange={setSelectedHeight}
+              options={makeLineHeightOptions()}
+              styles={customStyles}
+            />
+          </SelectContainer>
+        </SelectBar>
 
-      <Display>
-        <SampleText
-          font={selectedFont ? selectedFont.font : fontOptions[0]}
-          size={selectedSize ? selectedSize.value : makeSizeOptions()[2]}
-          weight={
-            selectedWeight
-              ? selectedWeight.weight
-              : makeFontWeightOptions(fontOptions[0])[1]
-          }
-          lineHeight={
-            selectedHeight ? selectedHeight.value : makeLineHeightOptions()[10]
-          }
-        >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </SampleText>
-        <span>{selectedFont ? selectedFont.value : null}</span>
-        <span>{selectedSize ? selectedSize.value : null}</span>
-        <span>{selectedWeight ? selectedWeight.value : null}</span>
-        <span>{selectedHeight ? selectedHeight.value : null}</span>
-        <button>create</button>
-      </Display>
+        <Display>
+          <SampleText
+            font={selectedFont ? selectedFont.font : fontOptions[0]}
+            size={selectedSize ? selectedSize.value : makeSizeOptions()[2]}
+            weight={
+              selectedWeight
+                ? selectedWeight.weight
+                : makeFontWeightOptions(fontOptions[0])[1]
+            }
+            lineHeight={
+              selectedHeight
+                ? selectedHeight.value
+                : makeLineHeightOptions()[15]
+            }
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </SampleText>
+          <Info>
+            <ul>
+              <li>{selectedFont ? selectedFont.font : fontOptions[0]}</li>
+              <li>
+                {selectedSize ? selectedSize.value : makeSizeOptions()[2]}
+              </li>
+              <li>
+                {selectedWeight
+                  ? selectedWeight.weight
+                  : makeFontWeightOptions(fontOptions[0])[1]}
+              </li>
+              <li>
+                {selectedHeight
+                  ? selectedHeight.value
+                  : makeLineHeightOptions()[15]}
+              </li>
+            </ul>
+            <div>
+              <button onClick={reset}>{ResetIcon}reset</button>
+              <button>{CheckIcon}create</button>
+            </div>
+          </Info>
+        </Display>
+      </Wrapper>
     </StyleGuideSection>
   );
 };
