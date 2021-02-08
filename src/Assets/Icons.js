@@ -35,3 +35,86 @@ export const EditIcon = (
     <line x1="16" y1="5" x2="19" y2="8" />
   </svg>
 );
+
+export const TypographyIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon icon-tabler icon-tabler-typography"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="#3d3d3d"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <line x1="4" y1="20" x2="7" y2="20" />
+    <line x1="14" y1="20" x2="21" y2="20" />
+    <line x1="6.9" y1="15" x2="13.8" y2="15" />
+    <line x1="10.2" y1="6.3" x2="16" y2="20" />
+    <polyline points="5 20 11 4 13 4 20 20" />
+  </svg>
+);
+
+export const ArrowsSortIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon icon-tabler icon-tabler-arrows-sort"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="#3d3d3d"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M3 9l4 -4l4 4m-4 -4v14" />
+    <path d="M21 15l-4 4l-4 -4m4 4v-14" />
+  </svg>
+);
+
+export const BoldIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon icon-tabler icon-tabler-bold"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="#3d3d3d"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M7 5h6a3.5 3.5 0 0 1 0 7h-6z" />
+    <path d="M13 12h1a3.5 3.5 0 0 1 0 7h-7v-7" />
+  </svg>
+);
+
+export const LineHeightIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="icon icon-tabler icon-tabler-line-height"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="#3d3d3d"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <polyline points="3 8 6 5 9 8" />
+    <polyline points="3 16 6 19 9 16" />
+    <line x1="6" y1="5" x2="6" y2="19" />
+    <line x1="13" y1="6" x2="20" y2="6" />
+    <line x1="13" y1="12" x2="20" y2="12" />
+    <line x1="13" y1="18" x2="20" y2="18" />
+  </svg>
+);

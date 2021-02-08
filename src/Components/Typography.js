@@ -3,8 +3,53 @@ import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import styled from "styled-components";
 import { useState } from "react";
+import {
+  ArrowsSortIcon,
+  BoldIcon,
+  LineHeightIcon,
+  TypographyIcon,
+} from "../Assets/Icons";
 
-const SelectBar = styled.div``;
+const SelectBar = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  grid-gap: 20px;
+  padding: 0 20px;
+  margin-bottom: 20px;
+`;
+
+const SelectContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  white-space: nowrap;
+  span {
+    margin-right: 10px;
+    svg {
+      stroke-width: 2.5;
+    }
+  }
+`;
+
+const customStyles = {
+  container: (provided, state) => ({
+    ...provided,
+    width: "100%",
+    fontSize: "16px",
+  }),
+
+  indicatorsContainer: (provided, state) => ({
+    ...provided,
+    cursor: "pointer",
+  }),
+  menu: (provided, state) => ({
+    ...provided,
+    margin: "0 0 0 0",
+  }),
+};
+
 const Display = styled.div``;
 
 const fonts = [
@@ -46,6 +91,7 @@ const makeSizeOptions = () => {
   }));
   return sizeOptions;
 };
+
 const makeLineHeightOptions = () => {
   let heightArr = [];
   for (let i = 0; i < 10; i += 0.1) {
@@ -96,40 +142,44 @@ const Typography = () => {
   return (
     <StyleGuideSection heading="02.Typography">
       <SelectBar>
-        <div>
-          fonts
+        <SelectContainer>
+          <span>{TypographyIcon}</span>
           <Select
             defaultValue={selectedFont}
             onChange={setSelectedFont}
             options={fontOptions}
+            styles={customStyles}
           />
-        </div>
-        <div>
-          size
+        </SelectContainer>
+        <SelectContainer>
+          <span>{ArrowsSortIcon}</span>
           <CreatableSelect
             isClearable
             defaultValue={selectedSize}
             onChange={setSelectedSize}
             options={makeSizeOptions()}
+            styles={customStyles}
           />
-        </div>
-        <div>
-          font weight
+        </SelectContainer>
+        <SelectContainer>
+          <span>{BoldIcon}</span>
           <Select
             defaultValue={selectedWeight}
             onChange={setSelectedWeight}
             options={makeFontWeightOptions(selectedFont)}
+            styles={customStyles}
           />
-        </div>
-        <div>
-          line height
+        </SelectContainer>
+        <SelectContainer>
+          <span>{LineHeightIcon}</span>
           <CreatableSelect
             isClearable
             defaultValue={selectedHeight}
             onChange={setSelectedHeight}
             options={makeLineHeightOptions()}
+            styles={customStyles}
           />
-        </div>
+        </SelectContainer>
       </SelectBar>
 
       <Display>
