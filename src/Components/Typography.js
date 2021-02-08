@@ -48,9 +48,25 @@ const customStyles = {
     ...provided,
     margin: "0 0 0 0",
   }),
+  option: (provided, state) => ({
+    ...provided,
+    fontFamily: state.data.font,
+    fontWeight: state.data.weight,
+  }),
+  singleValue: (provided, state) => ({
+    ...provided,
+    fontFamily: state.data.font,
+    fontWeight: state.data.weight,
+  }),
 };
 
 const Display = styled.div``;
+const SampleText = styled.section`
+  font-family: ${(props) => (props.font ? props.font : "Open Sans")};
+  font-size: ${(props) => (props.size ? props.size : "18px")};
+  font-weight: ${(props) => (props.weight ? props.weight : 400)};
+  line-height: ${(props) => (props.lineHeight ? props.lineHeight : 1)};
+`;
 
 const fonts = [
   {
@@ -78,6 +94,7 @@ const fonts = [
 const fontOptions = fonts.map((font) => ({
   value: font.fontName,
   label: font.fontName,
+  font: font.fontName,
 }));
 
 const makeSizeOptions = () => {
@@ -120,6 +137,8 @@ const makeFontWeightOptions = (selectedFont) => {
     const fontWeightOptions = fontWeightArr.map((weight) => ({
       value: weight,
       label: weight,
+      weight: weight.split(" ")[1],
+      font: selectedFont.font,
     }));
 
     return fontWeightOptions;
@@ -134,10 +153,14 @@ const makeFontWeightOptions = (selectedFont) => {
 };
 
 const Typography = () => {
-  const [selectedFont, setSelectedFont] = useState(null);
-  const [selectedSize, setSelectedSize] = useState(null);
-  const [selectedWeight, setSelectedWeight] = useState(null);
-  const [selectedHeight, setSelectedHeight] = useState(null);
+  const [selectedFont, setSelectedFont] = useState(fontOptions[0]);
+  const [selectedSize, setSelectedSize] = useState(makeSizeOptions()[2]);
+  const [selectedWeight, setSelectedWeight] = useState(
+    makeFontWeightOptions(fontOptions[0])[1]
+  );
+  const [selectedHeight, setSelectedHeight] = useState(
+    makeLineHeightOptions()[10]
+  );
 
   return (
     <StyleGuideSection heading="02.Typography">
@@ -183,10 +206,21 @@ const Typography = () => {
       </SelectBar>
 
       <Display>
-        <div>
+        <SampleText
+          font={selectedFont ? selectedFont.font : fontOptions[0]}
+          size={selectedSize ? selectedSize.value : makeSizeOptions()[2]}
+          weight={
+            selectedWeight
+              ? selectedWeight.weight
+              : makeFontWeightOptions(fontOptions[0])[1]
+          }
+          lineHeight={
+            selectedHeight ? selectedHeight.value : makeLineHeightOptions()[10]
+          }
+        >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </div>
+        </SampleText>
         <span>{selectedFont ? selectedFont.value : null}</span>
         <span>{selectedSize ? selectedSize.value : null}</span>
         <span>{selectedWeight ? selectedWeight.value : null}</span>
