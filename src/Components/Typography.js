@@ -1,16 +1,19 @@
-import StyleGuideSection from "./StyleGuideSection";
-import Select from "react-select";
-import CreatableSelect from "react-select/creatable";
-import styled from "styled-components";
-import { useState } from "react";
 import {
   ArrowsSortIcon,
   BoldIcon,
   CheckIcon,
+  EditIcon,
+  HIcon,
   LineHeightIcon,
   ResetIcon,
   TypographyIcon,
 } from "../Assets/Icons";
+import CreatableSelect from "react-select/creatable";
+import { fonts } from "../Assets/Fonts";
+import StyleGuideSection from "./StyleGuideSection";
+import Select from "react-select";
+import styled from "styled-components";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   border: var(--border-lightGrey);
@@ -20,8 +23,8 @@ const Wrapper = styled.div`
 const SelectBar = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 1.3fr 0.8fr 1fr 0.8fr;
-  grid-gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-gap: 10px;
   padding: 10px 20px;
 `;
 
@@ -41,7 +44,8 @@ const SelectContainer = styled.div`
 
 const Display = styled.div`
   padding: 30px;
-  border-top: var(--border-lightGrey);
+  border-top: ${(props) =>
+    props.submitted ? "none" : "var(--border-lightGrey)"};
 `;
 
 const SampleText = styled.section`
@@ -130,28 +134,14 @@ const customStyles = {
   }),
 };
 
-const fonts = [
-  {
-    fontName: "Open Sans",
-    fontWeight: ["Light 300", "Regular 400", "Semi-bold 600", "Bold 700"],
-  },
-  {
-    fontName: "Montserrat",
-    fontWeight: ["Light 300", "Regular 400", "Semi-bold 600", "Bold 700"],
-  },
-  {
-    fontName: "Lato",
-    fontWeight: ["Light 300", "Regular 400", "Bold 700"],
-  },
-  {
-    fontName: "Ubuntu",
-    fontWeight: ["Light 300", "Regular 400", "Medium 500", "Bold 700"],
-  },
-  {
-    fontName: "Source Code Pro",
-    fontWeight: ["Light 300", "Regular 400", "Medium 500", "Bold 700"],
-  },
-];
+//style ends
+
+const headings = ["Heading 1", "Heading 2", "Heading 3", "Heading 4", "Body"];
+
+const headingOptions = headings.map((heading) => ({
+  value: heading,
+  label: heading,
+}));
 
 const fontOptions = fonts.map((font) => ({
   value: font.fontName,
@@ -183,13 +173,6 @@ const makeLineHeightOptions = () => {
   return heightOptions;
 };
 
-const defaultontWeights = [
-  "Light 300",
-  "Regular 400",
-  "Semi-bold 600",
-  "Bold 700",
-];
-
 const makeFontWeightOptions = (selectedFont) => {
   if (selectedFont) {
     const fontWeightArr = fonts.filter(
@@ -205,16 +188,32 @@ const makeFontWeightOptions = (selectedFont) => {
 
     return fontWeightOptions;
   } else {
-    const defaultFontWeightOptions = defaultontWeights.map((fontWeight) => ({
+    const defaultFontWeightOptions = fonts[0].fontWeight.map((fontWeight) => ({
       value: fontWeight,
       label: fontWeight,
+      weight: fontWeight.split(" ")[1],
     }));
 
     return defaultFontWeightOptions;
   }
 };
 
+const useCreate = (initialValue) => {
+  const [submitted, setSubmitted] = useState(initialValue);
+
+  const onCreate = () => {
+    setSubmitted(1);
+  };
+  const onEdit = () => {
+    setSubmitted(0);
+  };
+  return { submitted, setSubmitted, onCreate, onEdit };
+};
+
 const Typography = () => {
+  const create = useCreate(0);
+
+  const [selectedHeading, setSelectedHeading] = useState(headingOptions[0]);
   const [selectedFont, setSelectedFont] = useState(fontOptions[0]);
   const [selectedSize, setSelectedSize] = useState(makeSizeOptions()[2]);
   const [selectedWeight, setSelectedWeight] = useState(
@@ -223,8 +222,18 @@ const Typography = () => {
   const [selectedHeight, setSelectedHeight] = useState(
     makeLineHeightOptions()[15]
   );
+  const selected = {
+    heading: selectedHeading ? selectedHeading : headingOptions[0],
+    font: selectedFont ? selectedFont : fontOptions[0],
+    size: selectedSize ? selectedSize : makeSizeOptions()[2],
+    weight: selectedWeight
+      ? selectedWeight
+      : makeFontWeightOptions(fontOptions[0])[1],
+    height: selectedHeight ? selectedHeight : makeLineHeightOptions()[15],
+  };
 
   const reset = () => {
+    setSelectedHeading(headingOptions[0]);
     setSelectedFont(fontOptions[0]);
     setSelectedSize(makeSizeOptions()[2]);
     setSelectedWeight(makeFontWeightOptions(fontOptions[0])[1]);
@@ -234,89 +243,94 @@ const Typography = () => {
   return (
     <StyleGuideSection heading="02.Typography">
       <Wrapper>
-        <SelectBar>
-          <SelectContainer>
-            <span>{TypographyIcon}</span>
-            <Select
-              defaultValue={selectedFont}
-              value={selectedFont}
-              onChange={setSelectedFont}
-              options={fontOptions}
-              styles={customStyles}
-            />
-          </SelectContainer>
-          <SelectContainer>
-            <span>{ArrowsSortIcon}</span>
-            <CreatableSelect
-              isClearable
-              defaultValue={selectedSize}
-              value={selectedSize}
-              onChange={setSelectedSize}
-              options={makeSizeOptions()}
-              styles={customStyles}
-            />
-          </SelectContainer>
-          <SelectContainer>
-            <span>{BoldIcon}</span>
-            <Select
-              defaultValue={selectedWeight}
-              value={selectedWeight}
-              onChange={setSelectedWeight}
-              options={makeFontWeightOptions(selectedFont)}
-              styles={customStyles}
-            />
-          </SelectContainer>
-          <SelectContainer>
-            <span>{LineHeightIcon}</span>
-            <CreatableSelect
-              isClearable
-              defaultValue={selectedHeight}
-              value={selectedHeight}
-              onChange={setSelectedHeight}
-              options={makeLineHeightOptions()}
-              styles={customStyles}
-            />
-          </SelectContainer>
-        </SelectBar>
-
-        <Display>
+        {!create.submitted ? (
+          <SelectBar>
+            <SelectContainer>
+              <span>{HIcon}</span>
+              <Select
+                defaultValue={selectedHeading}
+                value={selectedHeading}
+                onChange={setSelectedHeading}
+                options={headingOptions}
+                styles={customStyles}
+              />
+            </SelectContainer>
+            <SelectContainer>
+              <span>{TypographyIcon}</span>
+              <Select
+                defaultValue={selectedFont}
+                value={selectedFont}
+                onChange={setSelectedFont}
+                options={fontOptions}
+                styles={customStyles}
+              />
+            </SelectContainer>
+            <SelectContainer>
+              <span>{ArrowsSortIcon}</span>
+              <CreatableSelect
+                isClearable
+                defaultValue={selectedSize}
+                value={selectedSize}
+                onChange={setSelectedSize}
+                options={makeSizeOptions()}
+                styles={customStyles}
+              />
+            </SelectContainer>
+            <SelectContainer>
+              <span>{BoldIcon}</span>
+              <Select
+                defaultValue={selectedWeight}
+                value={selectedWeight}
+                onChange={setSelectedWeight}
+                options={makeFontWeightOptions(selectedFont)}
+                styles={customStyles}
+              />
+            </SelectContainer>
+            <SelectContainer>
+              <span>{LineHeightIcon}</span>
+              <CreatableSelect
+                isClearable
+                defaultValue={selectedHeight}
+                value={selectedHeight}
+                onChange={setSelectedHeight}
+                options={makeLineHeightOptions()}
+                styles={customStyles}
+              />
+            </SelectContainer>
+          </SelectBar>
+        ) : null}
+        <Display submitted={create.submitted}>
           <SampleText
-            font={selectedFont ? selectedFont.font : fontOptions[0]}
-            size={selectedSize ? selectedSize.value : makeSizeOptions()[2]}
-            weight={
-              selectedWeight
-                ? selectedWeight.weight
-                : makeFontWeightOptions(fontOptions[0])[1]
-            }
-            lineHeight={
-              selectedHeight
-                ? selectedHeight.value
-                : makeLineHeightOptions()[15]
-            }
+            font={selected.font.font}
+            size={selected.size.value}
+            weight={selected.weight.weight}
+            lineHeight={selected.height.value}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            {!create.submitted ? (
+              <>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </>
+            ) : (
+              <>{selected.heading.value}</>
+            )}
           </SampleText>
           <Info>
             <ul>
-              <li>{selectedFont ? selectedFont.font : fontOptions[0]}</li>
-              <li>
-                {selectedSize ? selectedSize.value : makeSizeOptions()[2]}
-              </li>
-              <li>
-                {selectedWeight
-                  ? selectedWeight.weight
-                  : makeFontWeightOptions(fontOptions[0])[1]}
-              </li>
-              <li>
-                {selectedHeight
-                  ? selectedHeight.value
-                  : makeLineHeightOptions()[15]}
-              </li>
+              <li>{selected.font.font}</li>
+              <li>{selected.size.value}</li>
+              <li>{selected.weight.value}</li>
+              <li>{selected.height.value}</li>
             </ul>
             <div>
-              <button onClick={reset}>{ResetIcon}reset</button>
-              <button>{CheckIcon}create</button>
+              {!create.submitted ? (
+                <>
+                  <button onClick={reset}>{ResetIcon}reset</button>
+                  <button onClick={create.onCreate}>{CheckIcon}create</button>
+                </>
+              ) : (
+                <button onClick={create.onEdit}>{EditIcon}edit</button>
+              )}
             </div>
           </Info>
         </Display>
