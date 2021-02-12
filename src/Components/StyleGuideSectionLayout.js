@@ -10,11 +10,11 @@ const H2 = styled.h2`
   margin-bottom: 25px;
 `;
 
-const StyleGuideSection = ({ heading, children }) => (
+const StyleGuideSectionLayout = ({ heading, children }) => (
   <Container>
     <H2>{heading}</H2>
     <section>{children}</section>
   </Container>
 );
 
-export default StyleGuideSection;
+export default StyleGuideSectionLayout;
