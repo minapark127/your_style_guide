@@ -18,6 +18,7 @@ import styled from "styled-components";
 const Wrapper = styled.form`
   border: var(--border-lightGrey);
   border-radius: 5px;
+  margin-bottom: 25px;
 `;
 
 const SelectBar = styled.div`
