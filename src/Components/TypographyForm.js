@@ -14,6 +14,7 @@ import CreatableSelect from "react-select/creatable";
 import { fonts } from "../Assets/Fonts";
 import Select from "react-select";
 import styled from "styled-components";
+import { slideIn } from "./GlobalStyles";
 
 const Wrapper = styled.form`
   border: var(--border-lightGrey);
@@ -55,6 +56,36 @@ const SampleText = styled.section`
   font-weight: ${(props) => (props.weight ? props.weight : 400)};
   line-height: ${(props) => (props.lineHeight ? props.lineHeight : 1.5)};
   margin-bottom: 40px;
+
+  span {
+    &:hover {
+      cursor: pointer;
+      opacity: 0.6;
+    }
+    &:active {
+      opacity: 0.4;
+      font-size: 0.9em;
+      transition: all linear 0.8s;
+    }
+  }
+  p {
+    opacity: 0;
+    font-family: Open Sans;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-blue);
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    svg {
+      stroke: var(--color-blue);
+      margin-right: 3px;
+    }
+  }
+  .show {
+    opacity: 1;
+    animation: ${slideIn} 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
 `;
 
 const Info = styled.div`
@@ -316,7 +347,24 @@ const TypographyForm = () => {
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </>
           ) : (
-            <>{selected.heading.value}</>
+            <>
+              <span
+                title="copy style"
+                onClick={(event) => {
+                  navigator.clipboard.writeText(
+                    `{font-family: ${selected.font.font};font-size: ${selected.size.value};font-weight: ${selected.weight.weight};line-height: ${selected.height.value};}`
+                  );
+                  event.target.nextSibling.classList.add("show");
+                  setTimeout(
+                    () => event.target.nextSibling.classList.remove("show"),
+                    800
+                  );
+                }}
+              >
+                {selected.heading.value}
+              </span>
+              <p>{CheckIcon}copied</p>
+            </>
           )}
         </SampleText>
         <Info>
