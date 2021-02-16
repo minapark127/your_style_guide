@@ -11,6 +11,8 @@ const SHeader = styled.header`
   position: sticky;
   top: 0;
   margin-bottom: 30px;
+  background-color: white;
+  z-index: 1;
 `;
 
 const Header = () => (
