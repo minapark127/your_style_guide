@@ -1,5 +1,6 @@
 import GlobalStyles from "./GlobalStyles";
 import Header from "./Header";
+import Footer from "./Footer";
 import StartForm from "./StartForm";
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
       <main>
         <StartForm />
       </main>
+      <Footer />
     </div>
   );
 }

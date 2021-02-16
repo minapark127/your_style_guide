@@ -11,8 +11,11 @@ const globalStyles = createGlobalStyle`
         --color-blue: #4285f4;
         /* --color-blue: #0652DD; */
         --color-red: #db4437;
+        --color-GHPurple:#6f42c1;
+        --color-LIBlue:#2867b2;
         --shadow-grey: 0px 0px 18px 0px rgba(217, 217, 217, 1);
         --border-lightGrey: 1px solid var(--color-lightGrey);
+        --border-lightGrey-dashed: 1px dashed var(--color-lightGrey);
         --border-blue: 1px solid var(--color-blue);
     }
 
@@ -49,6 +52,7 @@ const globalStyles = createGlobalStyle`
         max-width: 1200px;
         margin: 0 auto;
         padding: 5px 35px;
+        margin-bottom: 200px;
     }
 `;
 
