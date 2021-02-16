@@ -12,7 +12,7 @@ const SHeader = styled.header`
   top: 0;
   margin-bottom: 30px;
   background-color: white;
-  z-index: 1;
+  z-index: 3;
 `;
 
 const Header = () => (

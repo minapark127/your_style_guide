@@ -50,6 +50,7 @@ const globalStyles = createGlobalStyle`
     main{
         width: 100%;
         max-width: 1200px;
+        min-height: 50vh;
         margin: 0 auto;
         padding: 5px 35px;
         margin-bottom: 200px;

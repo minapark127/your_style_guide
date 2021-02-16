@@ -113,7 +113,6 @@ const customStyles = {
     width: "100%",
     fontSize: "16px",
   }),
-
   indicatorsContainer: (provided, state) => ({
     ...provided,
     cursor: "pointer",
@@ -277,6 +276,7 @@ const TypographyForm = () => {
               onChange={setSelectedSize}
               options={makeSizeOptions()}
               styles={customStyles}
+              maxMenuHeight={160}
             />
           </SelectContainer>
           <SelectContainer>
@@ -298,6 +298,7 @@ const TypographyForm = () => {
               onChange={setSelectedHeight}
               options={makeLineHeightOptions()}
               styles={customStyles}
+              maxMenuHeight={160}
             />
           </SelectContainer>
         </SelectBar>
