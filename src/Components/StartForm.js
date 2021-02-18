@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import StyleGuide from "./StyleGuide";
 import { ResetIcon } from "../Assets/Icons";
+import html2canvas from "html2canvas";
 
 const Section = styled.section`
   display: flex;
@@ -115,6 +116,33 @@ const StartForm = () => {
     changeHeader(`Style Guide - ${submit.businessName}`);
   }
 
+  const styleGuideRef = React.createRef();
+  const getImg = () => {
+    const styleGuide = styleGuideRef.current;
+    
+
+    html2canvas(styleGuide, {
+      width: styleGuide.scrollWidth,
+      height: styleGuide.scrollHeight,
+      scrollY: -window.scrollY,
+    }).then((canvas) => {
+      
+      document.body.appendChild(canvas);
+      saveImg(canvas.toDataURL(), `Style Guide - ${submit.businessName}`);
+      document.body.removeChild(canvas);
+    });
+  };
+
+  const saveImg = (url, filename) => {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       <Section>
@@ -142,7 +170,9 @@ const StartForm = () => {
           <ResetBtn>
             <button onClick={submit.onReset}>{ResetIcon}reset</button>
           </ResetBtn>
-          <StyleGuide title={submit.businessName} />
+          <StyleGuide title={submit.businessName} ref={styleGuideRef} />
+
+          <button onClick={getImg}>save</button>
         </>
       ) : null}
     </>
