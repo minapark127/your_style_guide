@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import StyleGuide from "./StyleGuide";
-import { ResetIcon } from "../Assets/Icons";
+import { ResetIcon, DownloadIcon } from "../Assets/Icons";
 import html2canvas from "html2canvas";
 
 const Section = styled.section`
@@ -71,6 +71,32 @@ const ResetBtn = styled.div`
   }
 `;
 
+const SaveP = styled.div`
+  display: flex;
+  justify-content: center;
+  button {
+    display: flex;
+    align-content: flex-end;
+    border-radius: 5px;
+    padding: 5px 10px;
+    transition: all linear 0.2s;
+    svg {
+      stroke: var(--color-blue);
+      margin-right: 3px;
+    }
+    &:hover {
+      background-color: var(--color-blue);
+      color: white;
+      svg {
+        stroke: white;
+      }
+    }
+    span {
+      padding: 2px;
+    }
+  }
+`;
+
 const onFocus = (event) => {
   const { target } = event;
   target.placeholder = "";
@@ -109,6 +135,16 @@ const useSubmit = (initialValue) => {
   return { submitted, businessName, error, onSubmit, onReset };
 };
 
+const saveImg = (url, filename) => {
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 const StartForm = () => {
   const submit = useSubmit(0);
 
@@ -119,28 +155,16 @@ const StartForm = () => {
   const styleGuideRef = React.createRef();
   const getImg = () => {
     const styleGuide = styleGuideRef.current;
-    
 
     html2canvas(styleGuide, {
       width: styleGuide.scrollWidth,
       height: styleGuide.scrollHeight,
       scrollY: -window.scrollY,
     }).then((canvas) => {
-      
       document.body.appendChild(canvas);
       saveImg(canvas.toDataURL(), `Style Guide - ${submit.businessName}`);
       document.body.removeChild(canvas);
     });
-  };
-
-  const saveImg = (url, filename) => {
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   };
 
   return (
@@ -172,7 +196,11 @@ const StartForm = () => {
           </ResetBtn>
           <StyleGuide title={submit.businessName} ref={styleGuideRef} />
 
-          <button onClick={getImg}>save</button>
+          <SaveP>
+            <button onClick={getImg}>
+              {DownloadIcon} <span>Save Style Guide</span>
+            </button>
+          </SaveP>
         </>
       ) : null}
     </>
