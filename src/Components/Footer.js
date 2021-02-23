@@ -57,7 +57,7 @@ const Footer = () => (
     <ul>
       <li>
         <span>&copy; {new Date().getFullYear()} Your Style Guide by </span>
-        <a href="https://github.com/minapark127">Mina Park</a>
+        <a href="https://mina-park.netlify.app/">Mina Park</a>
       </li>
       <li>
         <a href="https://github.com/minapark127">{GithubIcon}</a>
