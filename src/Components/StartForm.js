@@ -9,13 +9,13 @@ const Section = styled.section`
   flex-direction: column;
   span {
     text-align: center;
+    margin-top: 15px;
   }
 `;
 
 const Form = styled.form`
   display: flex;
   justify-content: center;
-  margin-bottom: 15px;
   & > * {
     font-size: 18px;
     text-transform: capitalize;
