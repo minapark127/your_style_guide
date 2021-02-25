@@ -2,6 +2,7 @@ import GlobalStyles from "./GlobalStyles";
 import Header from "./Header";
 import Footer from "./Footer";
 import StartForm from "./StartForm";
+import StartFormProvider from "../startFormContext";
 
 function App() {
   return (
@@ -9,7 +10,9 @@ function App() {
       <GlobalStyles />
       <Header />
       <main>
-        <StartForm />
+        <StartFormProvider>
+          <StartForm />
+        </StartFormProvider>
       </main>
       <Footer />
     </div>

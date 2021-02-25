@@ -3,6 +3,7 @@ import styled from "styled-components";
 import StyleGuide from "./StyleGuide";
 import { ResetIcon, DownloadIcon } from "../Assets/Icons";
 import html2canvas from "html2canvas";
+import { useStartFormDispatch, useStartFormState } from "../startFormContext";
 
 const Section = styled.section`
   display: flex;
@@ -97,42 +98,14 @@ const SaveP = styled.div`
   }
 `;
 
-const onFocus = (event) => {
-  const { target } = event;
-  target.placeholder = "";
-};
+//
+// style
+// ends
+//
 
 const changeHeader = (text) => {
   const header = document.querySelector(".headerText");
   header.innerHTML = text;
-};
-
-const useSubmit = (initialValue) => {
-  const [submitted, setSubmitted] = useState(initialValue);
-  const [businessName, setBusinessName] = useState();
-  const [error, setError] = useState(0);
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-    const [input] = event.target.form;
-    if (input.value !== "") {
-      setBusinessName(input.value);
-      setSubmitted(1);
-      setError(0);
-    } else {
-      setError(1);
-    }
-  };
-
-  const onReset = () => {
-    const input = document.querySelector(".businessNameInput");
-    changeHeader("Your style guide");
-    setSubmitted(0);
-    setError(0);
-    input.value = "";
-  };
-
-  return { submitted, businessName, error, onSubmit, onReset };
 };
 
 const saveImg = (url, filename) => {
@@ -145,11 +118,28 @@ const saveImg = (url, filename) => {
   document.body.removeChild(link);
 };
 
-const StartForm = () => {
-  const submit = useSubmit(0);
+const reset = () => {
+  const input = document.querySelector(".businessNameInput");
+  changeHeader("Your style guide");
+  input.value = "";
+};
 
-  if (submit.submitted) {
-    changeHeader(`Style Guide - ${submit.businessName}`);
+const StartForm = () => {
+  const { submitted, businessName, error } = useStartFormState();
+  const dispatch = useStartFormDispatch();
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const [input] = event.target.form;
+    if (input.value !== "") {
+      dispatch({ type: "submit", payload: input.value });
+    } else {
+      dispatch({ type: "error" });
+    }
+  };
+
+  if (submitted) {
+    changeHeader(`Style Guide - ${businessName}`);
   }
 
   const styleGuideRef = React.createRef();
@@ -162,7 +152,7 @@ const StartForm = () => {
       scrollY: -window.scrollY,
     }).then((canvas) => {
       document.body.appendChild(canvas);
-      saveImg(canvas.toDataURL(), `Style Guide - ${submit.businessName}`);
+      saveImg(canvas.toDataURL(), `Style Guide - ${businessName}`);
       document.body.removeChild(canvas);
     });
   };
@@ -170,18 +160,18 @@ const StartForm = () => {
   return (
     <>
       <Section>
-        <Form onSubmit={submit.onSubmit}>
+        <Form onSubmit={onSubmit}>
           <input
             type="text"
             placeholder="type your business name"
             className="businessNameInput"
-            {...onFocus}
           />
-          <button onClick={submit.onSubmit}>start</button>
+          <button onClick={onSubmit}>start</button>
         </Form>
-        {submit.error ? (
+
+        {error ? (
           <Error>business name must be typed in</Error>
-        ) : submit.submitted ? null : (
+        ) : submitted ? null : (
           <span>
             type your business name and press start to start generating your
             style guide
@@ -189,15 +179,22 @@ const StartForm = () => {
         )}
       </Section>
 
-      {submit.submitted ? (
+      {submitted ? (
         <>
           <ResetBtn>
-            <button onClick={submit.onReset}>{ResetIcon}reset</button>
+            <button
+              onClick={() => {
+                reset();
+                dispatch({ type: "reset" });
+              }}
+            >
+              {ResetIcon}reset
+            </button>
           </ResetBtn>
-          <StyleGuide title={submit.businessName} ref={styleGuideRef} />
+          <StyleGuide title={businessName} ref={styleGuideRef} />
 
           <SaveP>
-            <button onClick={getImg}>
+            <button onClick={() => getImg()}>
               {DownloadIcon} <span>Save Style Guide</span>
             </button>
           </SaveP>
