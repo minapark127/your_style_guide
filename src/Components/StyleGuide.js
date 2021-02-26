@@ -6,6 +6,7 @@ import html2canvas from "html2canvas";
 import { useEntryFormDispatch, useEntryFormState } from "../entryFormContext";
 import { changeHeader } from "./Entry";
 import { DownloadIcon, ResetIcon } from "../Assets/Icons";
+import ColourProvider from "../colourContext";
 
 const Guide = styled.div`
   padding: 10px;
@@ -131,7 +132,9 @@ const StyleGuide = () => {
           Style Guide - <span>{businessName}</span>
         </H1>
 
-        <ColourPalette />
+        <ColourProvider>
+          <ColourPalette />
+        </ColourProvider>
         <Typography />
       </Guide>
 
