@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { DeleteIcon } from "../Assets/Icons";
-import { slideIn } from "./GlobalStyles";
+import { slideIn } from "../GlobalStyles";
 import TypographyForm from "./TypographyForm";
 
 const Section = styled.section`

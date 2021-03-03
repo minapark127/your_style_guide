@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CheckIcon } from "../Assets/Icons";
-import { slideIn } from "./GlobalStyles";
+import { slideIn } from "../GlobalStyles";
 import { copyToClipboard } from "./Palette";
 
 const SampleText = styled.section`

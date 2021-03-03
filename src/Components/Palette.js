@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useColourDispatch, useColourState } from "../colourContext";
-import { slideIn, FadeOut } from "./GlobalStyles";
+import { slideIn, FadeOut } from "../GlobalStyles";
 import { ResetIcon, EditIcon } from "../Assets/Icons";
 
 const Section = styled.section`

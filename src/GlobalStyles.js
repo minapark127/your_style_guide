@@ -9,7 +9,6 @@ const globalStyles = createGlobalStyle`
         --color-grey: #636e72;
         --color-lightGrey: #bdc3c7;
         --color-blue: #4285f4;
-        /* --color-blue: #0652DD; */
         --color-red: #db4437;
         --color-GHPurple:#6f42c1;
         --color-LIBlue:#2867b2;
