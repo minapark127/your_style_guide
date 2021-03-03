@@ -1,4 +1,4 @@
-import { createGlobalStyle, keyframes } from "styled-components";
+import styled, { createGlobalStyle, keyframes } from "styled-components";
 import { reset } from "styled-reset";
 
 const globalStyles = createGlobalStyle`
@@ -74,5 +74,35 @@ export const FadeOut = keyframes`
   }
   100% {
     opacity: 0;
+  }
+`;
+
+export const ButtonNoBorderWithIcon = styled.button`
+  display: flex;
+  align-content: center;
+  padding: 5px;
+  border: none;
+  svg {
+    stroke: var(--color-blue);
+    stroke-width: 2;
+    margin-right: 3px;
+  }
+  &:hover {
+    opacity: 0.8;
+    color: var(--color-grey);
+    svg {
+      stroke: var(--color-grey);
+    }
+  }
+`;
+
+export const ButtonWithBorder = styled.button`
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: all linear 0.2s;
+  &:hover {
+    background-color: var(--color-blue);
+    color: white;
   }
 `;

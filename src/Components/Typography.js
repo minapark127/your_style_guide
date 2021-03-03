@@ -4,31 +4,17 @@ import TypographyForm from "./TypographyForm";
 import { AddIcon } from "../Assets/Icons";
 import styled from "styled-components";
 import AddedTypoSection from "./AddedTypoSection";
+import { ButtonNoBorderWithIcon } from "../GlobalStyles";
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  button {
-    border: none;
-    display: flex;
-    align-content: center;
-    padding: 5px;
-    border-radius: 5px;
-    transition: all linear 0.2s;
-    svg {
-      stroke: var(--color-blue);
-      stroke-width: 2;
-      margin-right: 2px;
-      width: 17px;
-      height: 17px;
-    }
-    &:hover {
-      opacity: 0.8;
-      color: var(--color-grey);
-      svg {
-        stroke: var(--color-grey);
-      }
-    }
+`;
+
+const ButtonNoBorderWithIconExtended = styled(ButtonNoBorderWithIcon)`
+  svg {
+    width: 17px;
+    height: 17px;
   }
 `;
 
@@ -58,7 +44,9 @@ const Typography = () => {
         <TypographyForm />
         {add.added}
         <ButtonContainer>
-          <button onClick={add.onClick}>{AddIcon}add</button>
+          <ButtonNoBorderWithIconExtended onClick={add.onClick}>
+            {AddIcon}add
+          </ButtonNoBorderWithIconExtended>
         </ButtonContainer>
       </div>
     </StyleGuideSectionLayout>

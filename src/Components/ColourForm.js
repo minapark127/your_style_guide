@@ -1,6 +1,7 @@
 import React, { forwardRef } from "react";
 import styled from "styled-components";
 import { useColourDispatch } from "../colourContext";
+import { ButtonWithBorder } from "../GlobalStyles";
 
 const Form = styled.form`
   position: relative;
@@ -13,18 +14,11 @@ const Form = styled.form`
     border: var(--border-lightGrey);
     font-size: 18px;
   }
-  button {
-    position: absolute;
-    right: 10px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: all linear 0.2s;
-    &:hover {
-      background-color: var(--color-blue);
-      color: white;
-    }
-  }
+`;
+
+const ButtonWithBorderExtended = styled(ButtonWithBorder)`
+  position: absolute;
+  right: 10px;
 `;
 
 const ColourForm = (props, ref) => {
@@ -48,7 +42,9 @@ const ColourForm = (props, ref) => {
         type="text"
         placeholder="add colour codes - #000000, #ffffff"
       />
-      <button onClick={onSubmit}>done</button>
+      <ButtonWithBorderExtended onClick={onSubmit}>
+        done
+      </ButtonWithBorderExtended>
     </Form>
   );
 };

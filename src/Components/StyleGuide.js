@@ -7,6 +7,7 @@ import { useEntryFormDispatch, useEntryFormState } from "../entryFormContext";
 import { changeHeader } from "./Entry";
 import { DownloadIcon, ResetIcon } from "../Assets/Icons";
 import ColourProvider from "../colourContext";
+import { ButtonNoBorderWithIcon, ButtonWithBorder } from "../GlobalStyles";
 
 const Guide = styled.div`
   padding: 10px;
@@ -16,24 +17,6 @@ const ResetBtn = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  button {
-    display: flex;
-    align-content: center;
-    padding: 5px;
-    border: none;
-    svg {
-      stroke: var(--color-blue);
-      stroke-width: 2;
-      margin-right: 3px;
-    }
-    &:hover {
-      opacity: 0.8;
-      color: var(--color-grey);
-      svg {
-        stroke: var(--color-grey);
-      }
-    }
-  }
 `;
 
 const H1 = styled.h1`
@@ -51,25 +34,21 @@ const H1 = styled.h1`
 const SaveP = styled.div`
   display: flex;
   justify-content: center;
-  button {
-    display: flex;
-    align-content: flex-end;
-    border-radius: 5px;
-    padding: 5px 10px;
-    transition: all linear 0.2s;
+`;
+
+const ButtonWithBorderExtended = styled(ButtonWithBorder)`
+  display: flex;
+  align-content: flex-end;
+  svg {
+    stroke: var(--color-blue);
+    margin-right: 3px;
+  }
+  span {
+    padding: 2px;
+  }
+  &:hover {
     svg {
-      stroke: var(--color-blue);
-      margin-right: 3px;
-    }
-    &:hover {
-      background-color: var(--color-blue);
-      color: white;
-      svg {
-        stroke: white;
-      }
-    }
-    span {
-      padding: 2px;
+      stroke: white;
     }
   }
 `;
@@ -117,14 +96,14 @@ const StyleGuide = () => {
   return (
     <>
       <ResetBtn>
-        <button
+        <ButtonNoBorderWithIcon
           onClick={() => {
             reset();
             dispatch({ type: "reset" });
           }}
         >
           {ResetIcon}reset
-        </button>
+        </ButtonNoBorderWithIcon>
       </ResetBtn>
 
       <Guide ref={styleGuideRef}>
@@ -139,9 +118,9 @@ const StyleGuide = () => {
       </Guide>
 
       <SaveP>
-        <button onClick={() => getImg()}>
+        <ButtonWithBorderExtended onClick={() => getImg()}>
           {DownloadIcon} <span>Save Style Guide</span>
-        </button>
+        </ButtonWithBorderExtended>
       </SaveP>
     </>
   );

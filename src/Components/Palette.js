@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useColourDispatch, useColourState } from "../colourContext";
-import { slideIn, FadeOut } from "../GlobalStyles";
+import { slideIn, FadeOut, ButtonNoBorderWithIcon } from "../GlobalStyles";
 import { ResetIcon, EditIcon } from "../Assets/Icons";
 
 const Section = styled.section`
@@ -46,31 +46,20 @@ const Chip = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+`;
 
-  button {
-    display: flex;
-    align-content: center;
-    border: none;
-    padding: 5px;
-    &:last-child {
-      margin-left: 10px;
-    }
-    svg {
-      stroke: var(--color-blue);
-      stroke-width: 2;
-      margin-right: 2px;
-      width: 17px;
-      height: 17px;
-    }
-    &:hover {
-      opacity: 0.8;
-      color: var(--color-grey);
-      svg {
-        stroke: var(--color-grey);
-      }
-    }
+const ButtonNoBorderWithIconExtended = styled(ButtonNoBorderWithIcon)`
+  &:last-child {
+    margin-left: 10px;
+  }
+  svg {
+    width: 17px;
+    height: 17px;
   }
 `;
+//
+//style ends
+//
 
 export const copyToClipboard = (content) => {
   navigator.clipboard.writeText(content);
@@ -112,10 +101,14 @@ const Palette = ({ inputref }) => {
       </ul>
 
       <ButtonContainer>
-        <button onClick={onEdit}>{EditIcon}edit</button>
-        <button onClick={() => dispatch({ type: "reset" })}>
+        <ButtonNoBorderWithIconExtended onClick={onEdit}>
+          {EditIcon}edit
+        </ButtonNoBorderWithIconExtended>
+        <ButtonNoBorderWithIconExtended
+          onClick={() => dispatch({ type: "reset" })}
+        >
           {ResetIcon}reset
-        </button>
+        </ButtonNoBorderWithIconExtended>
       </ButtonContainer>
     </Section>
   );

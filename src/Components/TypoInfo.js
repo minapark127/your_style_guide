@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { CheckIcon, EditIcon, ResetIcon } from "../Assets/Icons";
+import { ButtonNoBorderWithIcon } from "../GlobalStyles";
 
 const Info = styled.div`
   width: 100%;
@@ -23,33 +24,21 @@ const Info = styled.div`
   }
   div {
     display: flex;
-    button {
-      border: none;
-      display: flex;
-      align-content: center;
-      padding: 5px;
-      border-radius: 5px;
-      transition: all linear 0.2s;
-      &:last-child {
-        margin-left: 10px;
-      }
-      svg {
-        stroke: var(--color-blue);
-        stroke-width: 2;
-        margin-right: 2px;
-        width: 17px;
-        height: 17px;
-      }
-      &:hover {
-        opacity: 0.8;
-        color: var(--color-grey);
-        svg {
-          stroke: var(--color-grey);
-        }
-      }
-    }
   }
 `;
+
+const ButtonNoBorderWithIconExtended = styled(ButtonNoBorderWithIcon)`
+  &:last-child {
+    margin-left: 10px;
+  }
+  svg {
+    width: 17px;
+    height: 17px;
+  }
+`;
+//
+//style ends
+//
 
 const TypoInfo = ({ selected, create, reset }) => (
   <Info>
@@ -62,11 +51,17 @@ const TypoInfo = ({ selected, create, reset }) => (
     <div>
       {!create.submitted ? (
         <>
-          <button onClick={reset}>{ResetIcon}reset</button>
-          <button onClick={create.onCreate}>{CheckIcon}create</button>
+          <ButtonNoBorderWithIconExtended onClick={reset}>
+            {ResetIcon}reset
+          </ButtonNoBorderWithIconExtended>
+          <ButtonNoBorderWithIconExtended onClick={create.onCreate}>
+            {CheckIcon}create
+          </ButtonNoBorderWithIconExtended>
         </>
       ) : (
-        <button onClick={create.onEdit}>{EditIcon}edit</button>
+        <ButtonNoBorderWithIconExtended onClick={create.onEdit}>
+          {EditIcon}edit
+        </ButtonNoBorderWithIconExtended>
       )}
     </div>
   </Info>
