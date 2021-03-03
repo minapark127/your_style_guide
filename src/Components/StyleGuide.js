@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import { ClipboardIcon } from "../Assets/Icons";
 import ColourPalette from "./ColourPalette";
 import Typography from "./Typography";
+import html2canvas from "html2canvas";
+import { useEntryFormDispatch, useEntryFormState } from "../entryFormContext";
+import { changeHeader } from "./Entry";
+import { DownloadIcon, ResetIcon } from "../Assets/Icons";
+import ColourProvider from "../colourContext";
+import { ButtonNoBorderWithIcon, ButtonWithBorder } from "../GlobalStyles";
 
-const Wrapper = styled.div`
+const Guide = styled.div`
   padding: 10px;
+`;
+
+const ResetBtn = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const H1 = styled.h1`
@@ -18,33 +29,101 @@ const H1 = styled.h1`
     font-size: 25px;
     color: var(--color-black);
   }
-  p {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    font-weight: 300;
-    color: var(--color-black);
+`;
+
+const SaveP = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const ButtonWithBorderExtended = styled(ButtonWithBorder)`
+  display: flex;
+  align-content: flex-end;
+  svg {
+    stroke: var(--color-blue);
+    margin-right: 3px;
+  }
+  span {
+    padding: 2px;
+  }
+  &:hover {
     svg {
-      margin-right: 3px;
-      width: 18px;
-      height: 18px;
+      stroke: white;
     }
   }
 `;
+//
+// style
+// ends
+//
+const reset = () => {
+  const input = document.querySelector(".businessNameInput");
+  changeHeader("Your style guide");
+  input.value = "";
+};
 
-const StyleGuide = React.forwardRef(({ title }, styleGuideRef) => {
+const saveImg = (url, filename) => {
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+//
+// component begins
+//
+const StyleGuide = () => {
+  const styleGuideRef = useRef();
+  const { businessName } = useEntryFormState();
+  const dispatch = useEntryFormDispatch();
+
+  const getImg = () => {
+    const styleGuide = styleGuideRef.current;
+
+    html2canvas(styleGuide, {
+      width: styleGuide.scrollWidth,
+      height: styleGuide.scrollHeight,
+      scrollY: -window.scrollY,
+    }).then((canvas) => {
+      document.body.appendChild(canvas);
+      saveImg(canvas.toDataURL(), `Style Guide - ${businessName}`);
+      document.body.removeChild(canvas);
+    });
+  };
+
   return (
-    <Wrapper ref={styleGuideRef}>
-      <H1>
-        Style Guide - <span>{title}</span>
-        <p>
-          {ClipboardIcon}click and copy hex colour codes and typography styles
-        </p>
-      </H1>
-      <ColourPalette />
-      <Typography />
-    </Wrapper>
+    <>
+      <ResetBtn>
+        <ButtonNoBorderWithIcon
+          onClick={() => {
+            reset();
+            dispatch({ type: "reset" });
+          }}
+        >
+          {ResetIcon}reset
+        </ButtonNoBorderWithIcon>
+      </ResetBtn>
+
+      <Guide ref={styleGuideRef}>
+        <H1>
+          Style Guide - <span>{businessName}</span>
+        </H1>
+
+        <ColourProvider>
+          <ColourPalette />
+        </ColourProvider>
+        <Typography />
+      </Guide>
+
+      <SaveP>
+        <ButtonWithBorderExtended onClick={() => getImg()}>
+          {DownloadIcon} <span>Save Style Guide</span>
+        </ButtonWithBorderExtended>
+      </SaveP>
+    </>
   );
-});
+};
 
 export default StyleGuide;
